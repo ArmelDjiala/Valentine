@@ -15,12 +15,13 @@
       align-items: center;
       font-family: "Poppins", sans-serif;
 
-      /* Fond love plus doux */
+      /* Fond love doux */
       background: linear-gradient(135deg, #ffd6e5, #ffb3c9, #ff9ab8);
       overflow: hidden;
       padding: 10px;
     }
 
+    /* PAGE 1 — CADRE */
     .card {
       background: radial-gradient(circle at top, #ff9ac4 0, #ff4b7a 35%, #2b0024 100%);
       border-radius: 20px;
@@ -36,7 +37,7 @@
       z-index: 2;
     }
 
-    /* Cœurs */
+    /* Cœurs page 1 */
     .hearts {
       position: absolute;
       inset: -10px;
@@ -122,28 +123,40 @@
       display: none;
     }
 
-    /* MESSAGE FINAL EN DEHORS DU CADRE */
-    #final-message {
+    /* PAGE 2 — MESSAGE CINÉMATIQUE */
+    #final-screen {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      inset: 0;
+      background: linear-gradient(135deg, #ffd6e5, #ffb3c9, #ff9ab8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      color: #b3004b;
-      font-size: 2rem;
-      font-weight: 700;
-      z-index: 5;
+      z-index: 10;
       display: none;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(1.05); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    #final-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #b3004b;
       text-shadow: 0 0 10px white;
+      margin-bottom: 10px;
     }
 
     #final-sub {
-      font-size: 1.1rem;
-      margin-top: 10px;
+      font-size: 1.2rem;
       color: #7a0030;
     }
 
-    /* Confettis continus */
+    /* CONFETTIS CONTINUS */
     .confetti {
       position: fixed;
       width: 10px;
@@ -151,7 +164,7 @@
       top: -10px;
       border-radius: 2px;
       animation: fall linear forwards;
-      z-index: 1;
+      z-index: 5;
     }
 
     @keyframes fall {
@@ -165,13 +178,14 @@
 
 <body>
 
-  <!-- MESSAGE FINAL EN PLEIN ÉCRAN -->
-  <div id="final-message">
-    ✨💘 Merci d'être ma Valentine Manu 💘✨
+  <!-- PAGE 2 — CINÉMATIQUE -->
+  <div id="final-screen">
+    <div id="final-title">✨💘 Merci d'être ma Valentine Manu 💘✨</div>
     <div id="final-sub">Je te promets plein d'amour, de rires et de magie 🌹</div>
   </div>
 
-  <div class="card">
+  <!-- PAGE 1 — CADRE -->
+  <div class="card" id="page1">
     <div class="hearts">
       <div class="heart"></div>
       <div class="heart"></div>
@@ -180,21 +194,20 @@
       <div class="heart"></div>
     </div>
 
-    <div id="question-zone">
-      <h2>Veux-tu être ma Valentine Manu ? 💖</h2>
-      <p class="subtitle">Réfléchis bien avant de cliquer sur “Non” 😏</p>
-      <div class="buttons">
-        <button id="btn-yes">Oui</button>
-        <button id="btn-no">Non</button>
-      </div>
+    <h2>Veux-tu être ma Valentine Manu ? 💖</h2>
+    <p class="subtitle">Réfléchis bien avant de cliquer sur “Non” 😏</p>
+
+    <div class="buttons">
+      <button id="btn-yes">Oui</button>
+      <button id="btn-no">Non</button>
     </div>
   </div>
 
   <script>
     const btnYes = document.getElementById("btn-yes");
     const btnNo = document.getElementById("btn-no");
-    const questionZone = document.getElementById("question-zone");
-    const finalMessage = document.getElementById("final-message");
+    const page1 = document.getElementById("page1");
+    const finalScreen = document.getElementById("final-screen");
 
     /* Bouton NON qui fuit */
     btnNo.addEventListener("click", () => {
@@ -206,7 +219,7 @@
       btnNo.style.top = Math.random() * maxY + "px";
     });
 
-    /* Confettis continus */
+    /* Confettis continus (uniquement page 2) */
     function spawnConfetti() {
       const conf = document.createElement("div");
       conf.classList.add("confetti");
@@ -220,19 +233,14 @@
       setTimeout(() => conf.remove(), 5000);
     }
 
-    setInterval(spawnConfetti, 120); // confettis en continu
-
     /* Quand elle clique sur OUI */
     btnYes.addEventListener("click", () => {
-      questionZone.classList.add("hidden");
-      finalMessage.style.display = "block";
+      page1.style.display = "none";     // On enlève le cadre
+      finalScreen.style.display = "flex"; // Cinématique plein écran
+
+      setInterval(spawnConfetti, 120); // Confettis continus
     });
   </script>
 
 </body>
 </html>
-
-
-
-
-
