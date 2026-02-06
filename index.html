@@ -11,21 +11,15 @@
       margin: 0;
       height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       font-family: "Poppins", sans-serif;
-      background: #ffffff; /* FOND BLANC */
+
+      /* Fond love mais plus doux */
+      background: linear-gradient(135deg, #ffd6e5, #ffb3c9, #ff9ab8);
       color: #fff;
       overflow: hidden;
-      padding-top: 20px;
-    }
-
-    /* Nounours mignon */
-    .bear {
-      width: 140px;
-      height: auto;
-      margin-bottom: 10px;
+      padding: 10px;
     }
 
     .card {
@@ -144,13 +138,28 @@
       font-size: 1.4rem;
       margin-bottom: 10px;
     }
+
+    /* Confettis */
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: red;
+      top: -10px;
+      animation: fall 3s linear forwards;
+      opacity: 0.9;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 
 <body>
-
-  <!-- Nounours mignon -->
-  <img class="bear" src="https://i.imgur.com/4AiXzf8.png" alt="nounours mignon">
 
   <div class="card">
     <div class="hearts">
@@ -186,6 +195,7 @@
     const questionZone = document.getElementById("question-zone");
     const answerZone = document.getElementById("answer-zone");
 
+    /* Bouton NON qui fuit */
     btnNo.addEventListener("click", () => {
       const maxX = window.innerWidth - btnNo.offsetWidth;
       const maxY = window.innerHeight - btnNo.offsetHeight;
@@ -198,13 +208,33 @@
       btnNo.style.top = randomY + "px";
     });
 
+    /* Confettis */
+    function launchConfetti() {
+      for (let i = 0; i < 60; i++) {
+        const conf = document.createElement("div");
+        conf.classList.add("confetti");
+
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.background = ["#ff4b7a", "#ff9ac4", "#ffd6e5", "#ffffff"][Math.floor(Math.random() * 4)];
+        conf.style.animationDuration = (2 + Math.random() * 2) + "s";
+
+        document.body.appendChild(conf);
+
+        setTimeout(() => conf.remove(), 3000);
+      }
+    }
+
+    /* Quand on clique sur OUI */
     btnYes.addEventListener("click", () => {
       questionZone.classList.add("hidden");
       answerZone.classList.remove("hidden");
+      launchConfetti();
     });
   </script>
 
 </body>
 </html>
+
+
 
 
