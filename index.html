@@ -14,9 +14,7 @@
       justify-content: center;
       align-items: center;
       font-family: "Poppins", sans-serif;
-
-      /* Fond love doux */
-      background: linear-gradient(135deg, #ffe6ef, #ffc9da, #ffb3c9);
+      background: linear-gradient(135deg, #ffe6ef, #ffd3e2, #ffc0d5);
       overflow: hidden;
       padding: 10px;
     }
@@ -123,7 +121,7 @@
     #final-screen {
       position: fixed;
       inset: 0;
-      background: linear-gradient(135deg, #ffe6ef, #ffd3e2, #ffc0d5);
+      background: linear-gradient(135deg, #fff4f8, #ffe0eb, #ffd3e2);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -139,6 +137,20 @@
       to   { opacity: 1; transform: scale(1); }
     }
 
+    /* Nounours animé */
+    .bear {
+      width: 150px;
+      height: auto;
+      margin-bottom: 16px;
+      animation: bearFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes bearFloat {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
     #final-title {
       font-size: 2.4rem;
       font-weight: 700;
@@ -152,13 +164,13 @@
       color: #7a0030;
     }
 
-    /* CONFETTIS INFINIS + PLUS VISIBLES */
+    /* CONFETTIS INFINIS + VISIBLES */
     .confetti {
       position: fixed;
-      width: 14px;
-      height: 14px;
-      top: -20px;
-      border-radius: 3px;
+      width: 18px;
+      height: 18px;
+      top: -30px;
+      border-radius: 4px;
       animation: fall linear forwards;
       z-index: 5;
       opacity: 0.95;
@@ -166,7 +178,7 @@
 
     @keyframes fall {
       to {
-        transform: translateY(130vh) rotate(360deg);
+        transform: translateY(150vh) rotate(360deg);
         opacity: 0;
       }
     }
@@ -175,8 +187,13 @@
 
 <body>
 
-  <!-- PAGE 2 — CINÉMATIQUE -->
+  <!-- PAGE 2 — CINÉMATIQUE AVEC NOUNOURS ANIMÉ -->
   <div id="final-screen">
+    <img
+      class="bear"
+      src="https://raw.githubusercontent.com/ArmelDjiala/Valentine/main/bear.png"
+      alt="Nounours mignon"
+    >
     <div id="final-title">✨💘 Merci d'être ma Valentine Manu 💘✨</div>
     <div id="final-sub">Je te promets plein d'amour, de rires et de magie 🌹</div>
   </div>
@@ -216,33 +233,41 @@
       btnNo.style.top = Math.random() * maxY + "px";
     });
 
-    /* Confettis INFINIS + visibles */
+    /* Confettis INFINIS + visibles (uniquement page 2) */
     function spawnConfetti() {
       const conf = document.createElement("div");
       conf.classList.add("confetti");
 
       conf.style.left = Math.random() * 100 + "vw";
-      conf.style.background = ["#ff4b7a", "#ff9ac4", "#ffd6e5", "#ffffff", "#ffb3c9", "#ff6f91", "#ff3d68"][Math.floor(Math.random() * 7)];
-      conf.style.animationDuration = (2 + Math.random() * 3) + "s";
+      conf.style.background = [
+        "#ff4b7a",
+        "#ff9ac4",
+        "#ffd6e5",
+        "#ffffff",
+        "#ffb3c9",
+        "#ff6f91",
+        "#ff3d68",
+        "#ff85a1"
+      ][Math.floor(Math.random() * 8)];
+
+      conf.style.animationDuration = (3 + Math.random() * 4) + "s";
 
       document.body.appendChild(conf);
 
-      setTimeout(() => conf.remove(), 6000);
+      setTimeout(() => conf.remove(), 8000);
     }
 
     /* Quand elle clique sur OUI */
     btnYes.addEventListener("click", () => {
-      page1.style.display = "none";     
+      page1.style.display = "none";
       finalScreen.style.display = "flex";
 
       /* Confettis infinis */
-      setInterval(spawnConfetti, 80);
+      setInterval(spawnConfetti, 40);
     });
   </script>
 
 </body>
 </html>
 
-
-</html>
 
