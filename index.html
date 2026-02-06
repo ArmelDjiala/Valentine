@@ -1,185 +1,44 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
+/* Cœurs animés visibles sur smartphone */
+.hearts {
+  position: absolute;
+  inset: -10px; /* plus proche de la carte */
+  pointer-events: none;
+  z-index: -1;
+}
 
-  <!-- LIGNE ESSENTIELLE POUR SMARTPHONE -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+.heart {
+  position: absolute;
+  width: 28px;   /* plus grand pour smartphone */
+  height: 28px;
+  background: #ffdde9;
+  transform: rotate(45deg);
+  animation: float 5s infinite ease-in-out;
+  opacity: 0.8;
+}
 
-  <title>Veux-tu être ma Valentine Manu? 💘</title>
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: #ffdde9;
+  border-radius: 50%;
+}
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Poppins", sans-serif;
-      background: radial-gradient(circle at top, #ff9ac4 0, #ff4b7a 35%, #2b0024 100%);
-      color: #fff;
-      overflow: hidden;
-      padding: 10px; /* évite que le contenu touche les bords sur smartphone */
-    }
+.heart::before { top: -14px; left: 0; }
+.heart::after { left: -14px; top: 0; }
 
-    .card {
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      padding: 24px;
-      text-align: center;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      width: 100%;
-      max-width: 420px; /* taille idéale pour smartphone */
-      position: relative;
-    }
+/* Positionnement optimisé pour mobile */
+.heart:nth-child(1) { top: 5%; left: 10%; animation-delay: 0s; }
+.heart:nth-child(2) { top: 75%; left: 15%; animation-delay: 1s; }
+.heart:nth-child(3) { top: 15%; right: 10%; animation-delay: 2s; }
+.heart:nth-child(4) { bottom: 15%; right: 20%; animation-delay: 3s; }
+.heart:nth-child(5) { top: 45%; left: 45%; animation-delay: 4s; }
 
-    h2 {
-      font-size: 1.6rem; /* taille réduite pour mobile */
-      margin-bottom: 12px;
-    }
-
-    .subtitle {
-      font-size: 0.9rem;
-      opacity: 0.9;
-      margin-bottom: 20px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap; /* évite que les boutons débordent */
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 10px 22px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    #btn-yes {
-      background: #ff4b7a;
-      color: #fff;
-      box-shadow: 0 8px 20px rgba(255, 75, 122, 0.5);
-    }
-
-    #btn-no {
-      background: #ffffff;
-      color: #ff4b7a;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .message-yes-big {
-      font-size: 1.8rem; /* taille adaptée mobile */
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .message-yes-small {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      opacity: 0.95;
-    }
-
-    /* Cœurs animés */
-    .hearts {
-      position: absolute;
-      inset: -20px;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #ffdde9;
-      transform: rotate(45deg);
-      animation: float 6s infinite ease-in-out;
-      opacity: 0.7;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #ffdde9;
-      border-radius: 50%;
-    }
-
-    .heart::before { top: -10px; left: 0; }
-    .heart::after { left: -10px; top: 0; }
-
-    @keyframes float {
-      0% { transform: translateY(0) rotate(45deg); opacity: 0.2; }
-      50% { transform: translateY(-15px) rotate(45deg); opacity: 0.9; }
-      100% { transform: translateY(0) rotate(45deg); opacity: 0.2; }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="card">
-    <div class="hearts">
-      <div class="heart"></div>
-      <div class="heart"></div>
-      <div class="heart"></div>
-      <div class="heart"></div>
-      <div class="heart"></div>
-    </div>
-
-    <div id="question-zone">
-      <h2>Veux-tu être ma Valentine Manu ? 💖</h2>
-      <p class="subtitle">Réponds honnêtement… mais réfléchis bien avant de cliquer sur “Non” 😏</p>
-      <div class="buttons">
-        <button id="btn-yes">Oui</button>
-        <button id="btn-no">Non</button>
-      </div>
-    </div>
-
-    <div id="answer-zone" class="hidden">
-      <div class="sparkles">✨💘✨</div>
-      <div class="message-yes-big">Merci d'être ma Valentine 💕</div>
-      <div class="message-yes-small">
-        Je te promets plein d'amour, de rires<br>
-        et de moments magiques à deux. 🌹
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const btnYes = document.getElementById("btn-yes");
-    const btnNo = document.getElementById("btn-no");
-    const questionZone = document.getElementById("question-zone");
-    const answerZone = document.getElementById("answer-zone");
-
-    btnNo.addEventListener("click", () => {
-      const maxX = window.innerWidth - btnNo.offsetWidth;
-      const maxY = window.innerHeight - btnNo.offsetHeight;
-
-      const randomX = Math.random() * maxX;
-      const randomY = Math.random() * maxY;
-
-      btnNo.style.position = "absolute";
-      btnNo.style.left = randomX + "px";
-      btnNo.style.top = randomY + "px";
-    });
-
-    btnYes.addEventListener("click", () => {
-      questionZone.classList.add("hidden");
-      answerZone.classList.remove("hidden");
-    });
-  </script>
-</body>
-</html>
+/* Animation plus visible */
+@keyframes float {
+  0%   { transform: translateY(0) rotate(45deg); opacity: 0.3; }
+  50%  { transform: translateY(-18px) rotate(45deg); opacity: 1; }
+  100% { transform: translateY(0) rotate(45deg); opacity: 0.3; }
+}
