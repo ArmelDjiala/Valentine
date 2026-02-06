@@ -16,7 +16,7 @@
       font-family: "Poppins", sans-serif;
 
       /* Fond love doux */
-      background: linear-gradient(135deg, #ffd6e5, #ffb3c9, #ff9ab8);
+      background: linear-gradient(135deg, #ffe6ef, #ffc9da, #ffb3c9);
       overflow: hidden;
       padding: 10px;
     }
@@ -119,15 +119,11 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
     }
 
-    .hidden {
-      display: none;
-    }
-
-    /* PAGE 2 — MESSAGE CINÉMATIQUE */
+    /* PAGE 2 — CINÉMATIQUE */
     #final-screen {
       position: fixed;
       inset: 0;
-      background: linear-gradient(135deg, #ffd6e5, #ffb3c9, #ff9ab8);
+      background: linear-gradient(135deg, #ffe6ef, #ffd3e2, #ffc0d5);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -144,7 +140,7 @@
     }
 
     #final-title {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       font-weight: 700;
       color: #b3004b;
       text-shadow: 0 0 10px white;
@@ -152,24 +148,25 @@
     }
 
     #final-sub {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: #7a0030;
     }
 
-    /* CONFETTIS CONTINUS */
+    /* CONFETTIS INFINIS + PLUS VISIBLES */
     .confetti {
       position: fixed;
-      width: 10px;
-      height: 10px;
-      top: -10px;
-      border-radius: 2px;
+      width: 14px;
+      height: 14px;
+      top: -20px;
+      border-radius: 3px;
       animation: fall linear forwards;
       z-index: 5;
+      opacity: 0.95;
     }
 
     @keyframes fall {
       to {
-        transform: translateY(120vh) rotate(360deg);
+        transform: translateY(130vh) rotate(360deg);
         opacity: 0;
       }
     }
@@ -219,28 +216,33 @@
       btnNo.style.top = Math.random() * maxY + "px";
     });
 
-    /* Confettis continus (uniquement page 2) */
+    /* Confettis INFINIS + visibles */
     function spawnConfetti() {
       const conf = document.createElement("div");
       conf.classList.add("confetti");
 
       conf.style.left = Math.random() * 100 + "vw";
-      conf.style.background = ["#ff4b7a", "#ff9ac4", "#ffd6e5", "#ffffff", "#ffb3c9"][Math.floor(Math.random() * 5)];
+      conf.style.background = ["#ff4b7a", "#ff9ac4", "#ffd6e5", "#ffffff", "#ffb3c9", "#ff6f91", "#ff3d68"][Math.floor(Math.random() * 7)];
       conf.style.animationDuration = (2 + Math.random() * 3) + "s";
 
       document.body.appendChild(conf);
 
-      setTimeout(() => conf.remove(), 5000);
+      setTimeout(() => conf.remove(), 6000);
     }
 
     /* Quand elle clique sur OUI */
     btnYes.addEventListener("click", () => {
-      page1.style.display = "none";     // On enlève le cadre
-      finalScreen.style.display = "flex"; // Cinématique plein écran
+      page1.style.display = "none";     
+      finalScreen.style.display = "flex";
 
-      setInterval(spawnConfetti, 120); // Confettis continus
+      /* Confettis infinis */
+      setInterval(spawnConfetti, 80);
     });
   </script>
 
 </body>
 </html>
+
+
+</html>
+
