@@ -15,9 +15,8 @@
       align-items: center;
       font-family: "Poppins", sans-serif;
 
-      /* Fond love mais plus doux */
+      /* Fond love plus doux */
       background: linear-gradient(135deg, #ffd6e5, #ffb3c9, #ff9ab8);
-      color: #fff;
       overflow: hidden;
       padding: 10px;
     }
@@ -34,9 +33,10 @@
       max-width: 420px;
       position: relative;
       overflow: hidden;
+      z-index: 2;
     }
 
-    /* Cœurs visibles sur smartphone */
+    /* Cœurs */
     .hearts {
       position: absolute;
       inset: -10px;
@@ -122,32 +122,36 @@
       display: none;
     }
 
-    .message-yes-big {
-      font-size: 1.8rem;
+    /* MESSAGE FINAL EN DEHORS DU CADRE */
+    #final-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #b3004b;
+      font-size: 2rem;
       font-weight: 700;
-      margin-bottom: 12px;
+      z-index: 5;
+      display: none;
+      text-shadow: 0 0 10px white;
     }
 
-    .message-yes-small {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      opacity: 0.95;
+    #final-sub {
+      font-size: 1.1rem;
+      margin-top: 10px;
+      color: #7a0030;
     }
 
-    .sparkles {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-    }
-
-    /* Confettis */
+    /* Confettis continus */
     .confetti {
       position: fixed;
-      width: 8px;
-      height: 8px;
-      background: red;
+      width: 10px;
+      height: 10px;
       top: -10px;
-      animation: fall 3s linear forwards;
-      opacity: 0.9;
+      border-radius: 2px;
+      animation: fall linear forwards;
+      z-index: 1;
     }
 
     @keyframes fall {
@@ -161,6 +165,12 @@
 
 <body>
 
+  <!-- MESSAGE FINAL EN PLEIN ÉCRAN -->
+  <div id="final-message">
+    ✨💘 Merci d'être ma Valentine Manu 💘✨
+    <div id="final-sub">Je te promets plein d'amour, de rires et de magie 🌹</div>
+  </div>
+
   <div class="card">
     <div class="hearts">
       <div class="heart"></div>
@@ -172,19 +182,10 @@
 
     <div id="question-zone">
       <h2>Veux-tu être ma Valentine Manu ? 💖</h2>
-      <p class="subtitle">Réponds honnêtement… mais réfléchis bien avant de cliquer sur “Non” 😏</p>
+      <p class="subtitle">Réfléchis bien avant de cliquer sur “Non” 😏</p>
       <div class="buttons">
         <button id="btn-yes">Oui</button>
         <button id="btn-no">Non</button>
-      </div>
-    </div>
-
-    <div id="answer-zone" class="hidden">
-      <div class="sparkles">✨💘✨</div>
-      <div class="message-yes-big">Merci d'être ma Valentine 💕</div>
-      <div class="message-yes-small">
-        Je te promets plein d'amour, de rires<br>
-        et de moments magiques à deux. 🌹
       </div>
     </div>
   </div>
@@ -193,47 +194,44 @@
     const btnYes = document.getElementById("btn-yes");
     const btnNo = document.getElementById("btn-no");
     const questionZone = document.getElementById("question-zone");
-    const answerZone = document.getElementById("answer-zone");
+    const finalMessage = document.getElementById("final-message");
 
     /* Bouton NON qui fuit */
     btnNo.addEventListener("click", () => {
       const maxX = window.innerWidth - btnNo.offsetWidth;
       const maxY = window.innerHeight - btnNo.offsetHeight;
 
-      const randomX = Math.random() * maxX;
-      const randomY = Math.random() * maxY;
-
       btnNo.style.position = "absolute";
-      btnNo.style.left = randomX + "px";
-      btnNo.style.top = randomY + "px";
+      btnNo.style.left = Math.random() * maxX + "px";
+      btnNo.style.top = Math.random() * maxY + "px";
     });
 
-    /* Confettis */
-    function launchConfetti() {
-      for (let i = 0; i < 60; i++) {
-        const conf = document.createElement("div");
-        conf.classList.add("confetti");
+    /* Confettis continus */
+    function spawnConfetti() {
+      const conf = document.createElement("div");
+      conf.classList.add("confetti");
 
-        conf.style.left = Math.random() * 100 + "vw";
-        conf.style.background = ["#ff4b7a", "#ff9ac4", "#ffd6e5", "#ffffff"][Math.floor(Math.random() * 4)];
-        conf.style.animationDuration = (2 + Math.random() * 2) + "s";
+      conf.style.left = Math.random() * 100 + "vw";
+      conf.style.background = ["#ff4b7a", "#ff9ac4", "#ffd6e5", "#ffffff", "#ffb3c9"][Math.floor(Math.random() * 5)];
+      conf.style.animationDuration = (2 + Math.random() * 3) + "s";
 
-        document.body.appendChild(conf);
+      document.body.appendChild(conf);
 
-        setTimeout(() => conf.remove(), 3000);
-      }
+      setTimeout(() => conf.remove(), 5000);
     }
 
-    /* Quand on clique sur OUI */
+    setInterval(spawnConfetti, 120); // confettis en continu
+
+    /* Quand elle clique sur OUI */
     btnYes.addEventListener("click", () => {
       questionZone.classList.add("hidden");
-      answerZone.classList.remove("hidden");
-      launchConfetti();
+      finalMessage.style.display = "block";
     });
   </script>
 
 </body>
 </html>
+
 
 
 
